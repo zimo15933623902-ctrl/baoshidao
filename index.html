@@ -1,0 +1,218 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#172427"><title>宝石岛的账本 · 互动叙事</title><style>
+*{box-sizing:border-box}html{background:#182527;color:#ece6d6;font-family:"Songti SC","STSong","Noto Serif CJK SC",Georgia,serif}body{margin:0;min-height:100svh;display:flex;flex-direction:column;isolation:isolate}canvas,.veil{position:fixed;inset:0;width:100%;height:100%;z-index:-2;background:#243438}.veil{z-index:-1;background:linear-gradient(90deg,rgba(13,23,24,.93),rgba(17,26,26,.65) 35%,transparent 76%),linear-gradient(0deg,#131e20,transparent 25%,transparent 85%,#17242799)}header,footer{display:flex;align-items:center;justify-content:space-between;margin:0 5.5vw;padding:22px 0;border-bottom:1px solid #cfbb8c55;letter-spacing:.12em}header button{padding:6px 12px;background:#1c292cbd;color:#dcd3bd;border-color:#8f8974;font-size:.85rem}.brand{display:flex;align-items:center;gap:12px}.brand b{font-size:1.75rem;color:#d2b77f}main{flex:1;display:flex;align-items:center;padding:5vh 7vw;outline:0}section{animation:fade .45s ease both;width:min(100%,620px)}.cover{width:min(100%,680px)}.kicker,footer,.meta{font-family:Georgia,"Songti SC",serif;color:#d6bf91;font-size:.82rem;letter-spacing:.18em}.kicker{display:flex;align-items:center;gap:14px}.kicker:before{content:'';width:38px;height:1px;background:currentColor}.cover h1{font-size:clamp(4rem,8.5vw,9rem);line-height:1.1;letter-spacing:.045em;font-weight:500;margin:.22em 0;color:#f0e8d5;text-shadow:0 3px 16px #132122}.cover h1 span{display:block;margin-left:.68em;font-size:.76em}.cover p{border-left:2px solid #a88c59;padding-left:16px;margin:1.8rem 0}.actions{display:flex;gap:12px;flex-wrap:wrap}button{cursor:pointer;padding:12px 20px;background:#d7c59e;border:1px solid #e3cfaa;color:#182628;font:inherit;letter-spacing:.06em;border-radius:2px;min-height:40px}button:hover,button:focus-visible{outline:2px solid #aa8851;outline-offset:3px}button:disabled{opacity:.47;cursor:default}.secondary{background:#172529c9;color:#f0e5ca;border-color:#968a70}.panel,dialog{background:#e9e3d4;color:#292d29;border:1px solid #a29377;box-shadow:0 12px 40px #0e161955;padding:clamp(24px,4vw,54px)}.panel .kicker,.panel .meta{color:#65593f}.panel button,dialog button{background:#283b39;color:#f4eddc;border-color:#283b39}.panel h2,dialog h2{font-size:clamp(1.65rem,3.2vw,2.8rem);line-height:1.35;margin:16px 0}.panel p,dialog p,.cover p{font-size:1.05rem;line-height:1.85}.options{display:grid;gap:9px;margin:20px 0}.options button,.people button{background:transparent;color:#303b35;text-align:left;border:1px solid #978e77}.options .active,.people button.read{background:#384941;color:white}.options b{margin-right:14px;color:#897348}.options .active b{color:#e2cea6}.ledger{border-block:1px solid #aea68e;margin:16px 0;padding:14px 0;line-height:1.8;min-height:76px}.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.people button{text-align:center;padding:7px}.people i{display:block;font-style:normal;font-size:1.4rem}.return{display:inline-block;animation:return 1s forwards}.seal{width:100%;min-height:150px;background:linear-gradient(30deg,transparent 49%,#b7a98b 50%,transparent 51%),#d8ccb3!important;color:#392f24!important;touch-action:none}.coin{border-radius:100%;min-height:85px;background:#806e44!important}.medicine{animation:fadeout 1.6s both}.campus .veil{background:linear-gradient(90deg,#d9d8c799,#d9d8c722)}.paper{background:#f4f2ed}.paper canvas,.paper .veil{visibility:hidden}.paper header,.paper footer,.paper .brand{color:#52584e}.paper .panel{background:#fff;border:0;box-shadow:none}.paper main{justify-content:center}.dark canvas{filter:grayscale(1) brightness(.5)}footer{border:0;border-top:1px solid #b2aa894d;font-size:.74rem;padding:16px 0;letter-spacing:.12em}dialog{max-width:min(90vw,480px)}dialog::backdrop{background:#121c1dba}table{width:100%;border-collapse:collapse;margin:12px 0}td{padding:8px 4px;border-bottom:1px solid #b5ad98}.mark{font-size:2.7rem;letter-spacing:.1em;color:#7a6842}.center{text-align:center}.center .kicker{justify-content:center}button[hidden]{display:none}@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@keyframes return{to{transform:translate(60px,-22px);color:#555;opacity:.15}}@keyframes fadeout{0%,65%{opacity:1}100%{opacity:.15}}@media(max-width:650px){main{padding:22px 5vw;align-items:flex-end}.cover{margin-bottom:5vh}.cover h1{font-size:4.7rem}.veil{background:linear-gradient(0deg,#101d1ff5 3%,#152427a1 58%,transparent 90%)}header,footer{padding:12px 0}.panel{padding:22px}.cover p{margin:1rem 0}.people button{padding:7px 3px}}@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+
+</style></head><body><canvas id="scene" aria-hidden="true"></canvas><div class="veil"></div><header><span class="brand"><b>◇</b> 远洋宝石公司</span><button id="sound" aria-pressed="false">声音 · 关</button></header><main id="main" tabindex="-1"></main><footer><span id="folio"></span><span>宝石岛档案室</span></footer><dialog id="guide"><h2>游戏说明</h2><p>你将以远洋宝石公司新任经理的身份，在岛上工作三天。阅读来信与凭据，点击画面中的选项推进故事。</p><p>三天各自结算。第二、三天可调整分配方案，确认后即刻生效。</p><button onclick="guide.close()">合上说明</button></dialog><script>
+// Original pen-and-ink scenery. A fixed seed keeps each location recognizable on resize.
+function drawScene(canvas, kind = 'island', level = 0) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const rect = canvas.getBoundingClientRect();
+  const width = rect.width || 1000, height = rect.height || 600;
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(width * scale);
+  canvas.height = Math.round(height * scale);
+  ctx.scale(scale, scale);
+  const zoom = Math.max(width / 1000, height / 600);
+  ctx.translate((width - 1000 * zoom) * (width / height < 1.1 ? .76 : .5), (height - 600 * zoom) / 2);
+  ctx.scale(zoom,zoom);
+  let seed = 32177;
+  function rnd() { seed = (Math.imul(seed,1664525) + 1013904223) >>> 0; return seed / 4294967296; }
+  function range(a,b) { return a + (b-a)*rnd(); }
+  function shape(points, fill, stroke, weight=1) {
+    ctx.beginPath(); points.forEach(([x,y],i)=>i ? ctx.lineTo(x,y) : ctx.moveTo(x,y));
+    if(fill) {ctx.closePath();ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=weight;ctx.stroke();}
+  }
+  function mark(x,y,ex,ey,color,w=1){shape([[x,y],[ex,ey]],null,color,w);}
+  function box(x,y,w,h,col){ctx.fillStyle=col;ctx.fillRect(x,y,w,h);}
+  function disc(x,y,r,col){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();}
+  function gradient(x,y,ex,ey,stops){const g=ctx.createLinearGradient(x,y,ex,ey);stops.forEach(([t,c])=>g.addColorStop(t,c));return g;}
+  function hatch(poly, paint, n, dx, dy, color){
+    shape(poly,paint);ctx.save();ctx.clip();
+    const xs=poly.map(p=>p[0]),ys=poly.map(p=>p[1]),a=Math.min(...xs),b=Math.max(...xs),c=Math.min(...ys),d=Math.max(...ys);
+    for(let i=0;i<n;i++){const x=range(a-15,b+15),y=range(c-15,d+15),s=range(.35,1.5);mark(x,y,x+dx*s,y+dy*s,color,range(.45,1.05));}
+    ctx.restore();
+  }
+  const ink='#1c2928', edge='#9a9a7d', timber='#736a52', shadow='#263330';
+  function pine(x,y,h){
+    mark(x,y,x+1,y-h,ink,h/28);
+    for(let j=0;j<7;j++){
+      const yy=y-h+j*h*.108, rad=(j+1)*h*.029;
+      shape([[x,yy-2],[x-rad*.7,yy+h*.13],[x-rad,yy+h*.20],[x-1,yy+h*.16],[x+rad,yy+h*.19],[x+rad*.42,yy+h*.085]],ink);
+      mark(x-1,yy+h*.05,x-rad*.84,yy+h*.17,'#687568',.7);
+    }
+  }
+  function sky(){
+    box(-200,-200,1400,950,gradient(0,-45,0,395,[[0,'#293b3b'],[.58,'#768077'],[1,'#a7a28a']]));
+    for(let j=0;j<30;j++){
+      let x=range(-110,1040),y=range(6,330),len=range(20,165);
+      for(let i=0;i<range(3,9);i++){const px=x+range(-20,15);mark(px,y+i*2.2,px+len*range(.3,1),y+i*2.2-1,'rgba(24,37,36,.18)',.7);}
+    }
+    const mx=717,my=125;disc(mx,my,38,'#c0b99a');
+    ctx.save();ctx.clip();
+    for(let i=0;i<700;i++){const x=range(mx-40,mx+40),y=range(my-40,my+40);mark(x,y,x+range(1,7),y-.6,'rgba(76,79,65,.22)',.6);}
+    ctx.restore();
+    for(let j=0;j<10;j++){
+      let x=range(460,896),y=range(62,200),s=range(2,5);
+      shape([[x-s,y-1],[x-s*.25,y],[x,y+s*.5],[x+s*.45,y-s*.55],[x+s*1.3,y-s*.7]],null,'#384541',1.15);
+    }
+  }
+  function sea(){
+    const horizon=373;
+    box(-100,horizon,1300,300,gradient(0,horizon,0,618,[[0,'#929b8c'],[.45,'#50685f'],[1,'#273e3b']]));
+    for(let i=0;i<3500;i++){
+      let y=range(horizon,616),x=range(-100,1100),w=range(1,18)*(1+(y-horizon)*.003);
+      shape([[x,y],[x+w*.42,y-range(0,1.5)],[x+w,y+range(-.6,.7)]],null,rnd()<.54?'rgba(207,199,164,.39)':'rgba(16,42,40,.47)',range(.5,1.4));
+    }
+  }
+  function crags(){
+    const ridge=[[355,367],[402,352],[479,341],[492,326],[529,312],[558,295],[571,264],[589,255],[617,212],[644,203],[667,171],[682,183],[705,158],[716,155],[739,194],[758,211],[776,255],[790,239],[801,239],[826,273],[841,282],[860,305],[888,319],[912,336],[943,347],[963,362],[1003,375],[965,386],[905,392],[844,398],[760,401],[675,397],[584,390],[523,392],[465,382],[418,379]];
+    hatch(ridge,'#52645c',11000,5,-7,'rgba(174,181,152,.4)');
+    const faces=[
+    [[490,333],[531,312],[572,264],[589,255],[566,294],[559,318],[546,340],[511,357]],
+    [[552,324],[617,212],[644,203],[667,171],[654,208],[633,234],[625,265],[607,277],[585,319]],
+    [[596,324],[645,238],[667,207],[705,158],[716,155],[702,193],[684,225],[665,250],[641,294]],
+    [[661,329],[685,250],[711,206],[716,156],[739,194],[756,211],[749,231],[744,264],[719,298]],
+    [[711,301],[751,242],[758,211],[776,255],[783,271],[777,292],[762,320]],
+    [[765,321],[789,273],[801,239],[826,273],[845,288],[839,308],[865,322],[827,336]]
+    ];
+    faces.forEach((face,i)=>hatch(face,i%2?'#818a77':'#788574',700,-7,13,'rgba(37,54,48,.65)'));
+    for(let j=0;j<5;j++){let x=range(420,570),y=range(350,363);pine(x,y,range(8,18));}
+    for(let i=0;i<230;i++){
+      let x=range(525,925),y=range(321,371),limit=321+Math.pow((x-715)/200,2)*30;
+      if(y>limit)pine(x,y,range(7,24));
+    }
+    const cliff=[[354,366],[395,364],[431,355],[450,359],[498,346],[540,345],[567,350],[604,342],[629,349],[671,348],[699,358],[723,355],[753,363],[805,357],[848,367],[892,358],[933,365],[980,367],[1003,374],[989,384],[966,386],[949,395],[915,395],[890,403],[851,399],[806,416],[765,414],[730,424],[694,418],[647,424],[623,412],[580,411],[553,404],[516,405],[488,395],[442,392],[421,385],[380,379]];
+    hatch(cliff,'#536258',3200,-2,9,'rgba(179,177,146,.56)');
+    for(let i=0;i<63;i++){let x=range(385,982),y=410-Math.pow((x-695)/300,2)*32+range(-3,4);mark(x,y,x+range(5,27),y-1,'#b1b39a',1.3);}
+  }
+  function mill(){
+    // Mine headframe, winding house, rails and a lit mineral seam.
+    const x=822,y=337;
+    const beam=(x1,y1,x2,y2,w=4)=>{mark(x1,y1,x2,y2,'#26302a',w+1.6);mark(x1-.6,y1,x2-.6,y2,'#9c9679',w*.35);};
+    beam(x-17,y,x-8,y-68);beam(x+18,y,x+6,y-66);beam(x-5,y,x-3,y-67);beam(x+27,y,x+10,y-64);
+    for(let i=0;i<4;i++){let yy=y-11-i*14;beam(x-15+i*2,yy,x+14-i*2,yy-12,2);beam(x+14-i*2,yy,x-13+i*2,yy-12,1.5);}
+    box(x-12,y-69,25,7,'#4b4e40');shape([[x-15,y-69],[x-3,y-80],[x+16,y-68]],'#2f3d34',edge,.7);
+    mark(x+8,y-65,x+63,y-8,'#25322e',1);
+    shape([[864,338],[864,311],[907,310],[907,340]],'#736e55',ink,2);
+    shape([[857,313],[870,299],[905,300],[914,312]],'#424b42',ink,2);
+    for(let i=0;i<10;i++)mark(868+i*3.7,317,868+i*3.7,335,'#4c4a3c',.8);
+    box(877,317,8,7,'#bfaa79');box(894,317,6,8,'#bda773');
+    hatch([[645,354],[655,329],[673,317],[690,318],[706,333],[720,356]],'#73796b',350,-2,4,'#515e51');
+    shape([[659,354],[659,336],[671,324],[686,324],[698,338],[698,356]],'#172824','#9b987c',3);
+    for(let i=0;i<4;i++)mark(660+i*10,334,664+i*9,328,'#514f40',2);
+    const glow=ctx.createRadialGradient(680,343,1,680,343,16);glow.addColorStop(0,'#86bcb0');glow.addColorStop(.4,'#48786b');glow.addColorStop(1,'rgba(69,105,93,0)');disc(680,343,16,glow);
+    shape([[677,344],[680,338],[684,340],[683,345],[679,348]],'#a6c9b8');
+    mark(673,353,619,382,'#2d3831',2);mark(685,354,635,385,'#2d3831',2);
+    for(let i=0;i<7;i++)mark(672-i*7,355+i*3.7,685-i*7,357+i*4,'#756e55',1.7);
+  }
+  function ship(){
+    ctx.save();ctx.translate(513,439);
+    shape([[-38,-4],[-20,-2],[-13,-5],[14,-5],[27,-8],[38,-11],[28,0],[23,5],[-26,5]],'#293b35','#b6b297',1.1);
+    box(-17,-14,33,9,'#a4a48b');box(-10,-20,17,7,'#666f61');
+    for(let i=0;i<5;i++)box(-14+i*6,-12,3,3,'#35463c');
+    box(3,-28,5,15,'#44493d');mark(-22,-29,-22,-4,ink,1.4);mark(-22,-28,7,-10,'#536055',1);mark(23,-29,23,-6,ink,1.3);
+    for(let i=0;i<14;i++){const x=8+i*2.8,y=-30-i*.9;disc(x+range(-2,2),y,range(1,4),'rgba(51,60,51,.18)');}
+    mark(-42,8,37,7,'#a2ae96',1);ctx.restore();
+  }
+  function building(t){
+    let x=650,y=351,w=[157,228,299][t],h=[62,73,85][t];
+    function wing(x,y,w,h){
+      hatch([[x,y],[x,y-h],[x+w,y-h],[x+w,y]],'#a19a7f',470,-4,3,'#787a65');
+      shape([[x-8,y-h],[x+11,y-h-23],[x+w-8,y-h-23],[x+w+9,y-h]],'#48564d',ink,2);
+      for(let j=0;j<2;j++)for(let i=0;i<Math.floor(w/29);i++){
+        let xx=x+12+i*29,yy=y-h+8+j*28;
+        box(xx,yy,11,16,'#404c42');box(xx+2,yy+2,6,10,'#bdae7f');mark(xx+5,yy,xx+5,yy+14,'#59604f',1);
+      }
+    }
+    wing(x-w/2,y,w,h);
+    if(t>0){wing(x-33,y+4,65,h+9);shape([[x-40,y-h-3],[x,y-h-33],[x+40,y-h-3]],'#9c997e',ink,2);}
+    if(t===2){wing(x-w/2-13,y+2,53,h+12);wing(x+w/2-38,y+2,53,h+12);}
+    box(x-9,y-26,18,26,'#36453b');mark(x-w/2-20,y+5,x+w/2+22,y+5,edge,3);
+  }
+  function motor(t){
+    ctx.save();ctx.translate(683,358);
+    let roof=[-43,-61,-28][t],w=[107,121,137][t];
+    shape([[-w,4],[-w+5,-15],[-60,-22],[-34,roof],[16,roof-2],[49,-24],[w-12,-16],[w,-3],[w-4,12],[-w+3,13]],['#839084','#6a7468','#a3916d'][t],ink,3);
+    shape([[-51,-23],[-30,roof+5],[12,roof+4],[38,-23]],'#30403d','#b0b099',2);mark(-8,roof+3,-8,-22,edge,2);
+    for(let side of [-1,1]){disc(side*(w-32),12,16,ink);disc(side*(w-32),12,8,'#8a8e7d');disc(side*(w-32),12,4,'#46534c');}
+    mark(-w+4,-12,-w+19,-13,'#cec2a0',4);mark(w-23,-13,w-10,-12,'#c9b680',4);mark(-w+8,-4,w-12,-4,'#9d9d81',1.2);
+    ctx.restore();
+  }
+  function interior(type){
+    const wet=type==='rain',study=type==='campus';
+    box(-20,-20,1100,660,gradient(350,220,920,525,[[0,wet?'#333e3c':'#5c6154'],[1,wet?'#1d292a':'#353e37']]));
+    for(let i=0;i<40;i++){let x=i*29;mark(x,0,x-10,445,'#2d3833',2);mark(x+2,0,x-8,445,'rgba(170,168,140,.27)',1);}
+    box(-20,426,1100,200,'#444638');for(let i=0;i<20;i++)mark(550+(i-9)*78,425,550+(i-9)*118,620,'#252d27',2);
+    box(609,90,173,210,'#282f29');box(619,99,154,190,'#84968b');
+    for(let i=0;i<90;i++){let x=range(620,767),y=range(100,276);mark(x,y,x-4,y+range(3,14),'#b7bca6',.8);}
+    box(689,95,8,198,'#3a4034');box(616,184,157,7,'#3a4034');box(600,296,192,9,'#242f29');
+    if(wet){
+      shape([[562,386],[752,363],[845,401],[625,433]],'#8e8972',ink,3);box(572,395,8,50,ink);box(826,403,8,57,ink);
+      disc(629,373,16,'#9c927b');shape([[614,368],[620,357],[633,354],[644,362],[643,373],[633,365]],'#30382f');
+      shape([[641,378],[660,361],[695,363],[708,374],[728,368],[770,384],[790,393],[684,407],[634,398]],'#667469',ink,2);
+      for(let i=0;i<29;i++){let x=range(651,741),y=range(380,391);mark(x,y,x+7,y-7,'#a1a58b',.7);}
+      for(let i=0;i<5;i++)mark(555+i*2,40+i*48,554+i*2,52+i*48,'#929e90',1.4);
+    }else{
+      shape([[539,354],[804,339],[864,363],[577,387]],'#8d8063',ink,3);for(const x of [558,827])box(x,374,11,85,ink);
+      shape([[603,355],[648,353],[666,362],[620,367]],'#c8bda0',ink,1);for(let j=0;j<3;j++)mark(615+j*4,358+j,645+j*4,356+j,'#777969',.7);
+      if(study){disc(728,306,17,'#a69b83');shape([[712,303],[706,294],[720,281],[738,285],[744,299],[729,295],[722,307]],ink);
+        shape([[722,322],[744,317],[765,340],[757,353],[715,352],[691,362],[672,356],[710,340]],'#47574e',ink,2);
+        shape([[640,354],[626,319],[669,317],[682,350],[695,353]],'#6d7970',ink,2);
+      }else{shape([[694,349],[703,332],[716,330],[725,342],[711,353]],'#84a797',ink,1.5);mark(703,332,710,350,'#c4d0b5',1.5);}
+    }
+  }
+  const t=level>=20 ? (level===80?2:level===50?1:0) : Math.min(2,Math.max(0,level|0));
+  if(['office','rain','campus'].includes(kind)){interior(kind);}
+  else {
+    sky();sea();crags();mill();
+    if(kind==='car'||kind==='house'){
+      hatch([[100,440],[470,345],[760,331],[1100,341],[1100,610],[0,610]],'#596553',4300,6,-2,'rgba(170,172,142,.47)');
+      if(kind==='car'){shape([[149,474],[541,370],[1050,330],[1050,352],[566,391],[180,508]],'#8f8f7a');motor(t);}
+      else building(t);
+    }else ship();
+  }
+  for(let i=0;i<12500;i++){const x=range(-60,1070),y=range(-20,620);mark(x,y,x+range(.2,2),y+range(-.4,.4),rnd()<.5?'rgba(219,211,175,.12)':'rgba(20,33,28,.13)',range(.4,1));}
+  const shade=ctx.createRadialGradient(690,275,78,665,285,670);
+  shade.addColorStop(0,'rgba(9,20,18,0)');shade.addColorStop(.65,'rgba(13,25,22,.14)');shade.addColorStop(1,'rgba(8,17,16,.58)');
+  box(-100,-100,1300,900,shade);
+}
+window.drawScene = drawScene;
+
+</script><script>
+const $=s=>document.querySelector(s), main=$('#main'),canvas=$('#scene'), guide=$('#guide');
+const names=['阿强','阿香','阿福','阿花'],tiers=[20,50,80], prizes=[['普通办公室'],['家用轿车','豪华 SUV','超级跑车'],['普通公寓','花园洋房','豪华庄园']];
+const questions=['在大学小组作业中，你的本能倾向更接近？','经历这次模拟，未来面对小组作业，你会？','你如何看待小组作业中“搭便车”的现象？','你更支持哪一种小组作业评分方式？'];
+const answers=[['主动承担责任，追求作业高质量','最小化个人付出，拿到同等成果就好','随大流，别人干我就跟着干'],['主动承担任务，尊重他人劳动，推动公平分工','维持原有习惯，尽量减少个人付出','重新思考协作公平，观念已经发生改变','还没想好，但会认真考虑'],['属于对他人劳动的不公平占有','存在不公平，但属于小组合作中常见的情况','不认为存在问题，小组本来就该一起拿分'],['以小组为单位整体赋分','依据各人实际承担的工作量差异化赋分','由小组全体成员共同商议，决定本组的赋分规则']];
+let day,choices,response,opened,kind='island',level=0,enabled=false,ctx,noise,beat,timer;
+function reset(){day=0;choices=[20,null,null];response=[];opened=new Set();home()}
+function draw(){drawScene(canvas,kind,level)}
+window.addEventListener('resize',draw);
+function audio(){if(beat)clearInterval(beat);if(noise){noise.stop();noise=null}if(!enabled)return;ctx??=new AudioContext();ctx.resume().catch(()=>{});if(kind==='rain'){const b=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()-.5)*.045;noise=ctx.createBufferSource();noise.buffer=b;noise.loop=true;noise.connect(ctx.destination);noise.start()}else if(!document.body.className&&['office','car','house','island'].includes(kind)){let n=0;beat=setInterval(()=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=[196,246.94,293.66,185,220,277][n++%6];g.gain.setValueAtTime(.024,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.65);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+.7)},760)}}
+$('#sound').onclick=()=>{enabled=!enabled;$('#sound').textContent='声音 · '+(enabled?'开':'关');$('#sound').setAttribute('aria-pressed',String(enabled));audio()};
+function view(scene,mode,folio,html,l=0){clearTimeout(timer);kind=scene;level=l;document.body.className=mode;$('#folio').textContent=folio;main.innerHTML=html;draw();audio();main.focus({preventScroll:true});window.scrollTo(0,0)}
+function btn(label,fn,cls=''){return '<button class="'+cls+'" onclick="'+fn+'">'+label+'</button>'}
+function card(k,title,html){return '<section class="panel"><div class="kicker">'+k+'</div><h2>'+title+'</h2>'+html+'</section>'}
+function home(){view('island','','远洋档案　/　航行卷', '<section class="cover"><div class="kicker">远洋档案　·　互动叙事</div><h1>宝石岛<span>的账本</span></h1><p>一艘船，三天任期，一本尚未翻开的账。</p><div class="actions">'+btn('开始游戏','quiz(0)')+btn('游戏说明','guide.showModal()','secondary')+'</div></section>')}
+function quiz(i){view('campus','paper',i?'离岛记录':'登岛记录',card(i?'离岛问卷　'+i+' / 3':'登岛问卷　1 / 1',questions[i],'<div class="options">'+answers[i].map((s,j)=>btn('<b>'+String.fromCharCode(65+j)+'</b>'+s,'answer('+i+','+j+')')).join('')+'</div>'))}
+function answer(i,j){response[i]=j;if(!i)brief();else if(i<3)quiz(i+1);else finish()}
+function brief(){view('island','','上任通知',card('远洋宝石公司　·　人事函','经理，欢迎登岛。','<p>未来三天，你将负责矿场的工资分配。每颗宝石价值 100 金币。公司把从每颗宝石中扣下的金额称为“剥削数值”，其余作为工资付给开采者。</p><p>每天单独结算。第一天领取办公室，第二天挑选座驾，第三天决定住宅。扣下的金额越多，当天的奖品越豪华。</p>'+btn('开始第一天工作','work()')))}
+function work(){const prompts=['公司已核定首日标准。矿洞里传来第一声镐响。','岛民擦去额头的汗。产量依旧稳定，今天的座驾由你决定。','最后一天。有人在洞口扶膝歇息。海岸边，待交付的住宅已经备好。'];view('island','','经理任期　/　三日',card('矿场签发单　·　第 '+(day+1)+' 天',['初到矿场','海滨的车钥匙','最后一份契约'][day],'<p>'+prompts[day]+'</p>'+(day?'<div class="options">'+tiers.map((n,i)=>btn('<b>'+['Ⅰ','Ⅱ','Ⅲ'][i]+'</b>'+prizes[day][i]+'　｜　工资 '+(100-n)+' · 剥削 '+n,'selectTier('+n+',this)')).join('')+'</div>':'<div class="ledger">每人日工资　<strong>80</strong> 金币<br>剥削数值　20　·　公司基准锁定</div>')+'<button id="settle" onclick="settle()" '+(day?'disabled':'')+'>确认结算</button>'))}
+function selectTier(n,b){choices[day]=n;document.querySelectorAll('.options button').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});$('#settle').disabled=false}
+function reward(d){return prizes[d][tiers.indexOf(choices[d])]}
+function settle(){const n=choices[day];if(n===null)return;view(['office','car','house'][day],'','经理收执　/　第 '+(day+1)+' 天',card('本轮结算完成','已解锁 · '+reward(day),'<p>'+['办公室的桌面上，第一颗宝石映着窗外的海。','你接过车钥匙。海边公路上，车灯亮了起来。','住宅交接书上盖好了章。你把最后一颗宝石摆上窗台。'][day]+'</p><div class="ledger">当日单人工资　'+(100-n)+' 金币<br>当日剥削数值　'+n+'</div>'+btn(day<2?'进入第'+['二','三'][day]+'天':'收起交接书',day<2?'day++;work()':'turn()')),tiers.indexOf(n))}
+function turn(){view('house','dark','第三天　/　日终',card('日终审计','住宅、座驾这些令人向往的奖品，究竟是谁在承受代价？','<p>请查看你今天带走的收益，来自哪里。</p>'+btn('翻开今日账本','ledger()')),tiers.indexOf(choices[2]))}
+function ledger(){view('island','dark','第三天　/　个人账本',card('矿场账房','四份个人账本','<p>点开每个人的记录，核对今天的宝石去向。</p><div class="people">'+names.map((s,i)=>btn('<i aria-hidden="true">♙</i>'+s,'readEntry('+i+')')).join('')+'</div><div class="ledger" id="entry" aria-live="polite">四张封存的凭据，等待签阅。</div><span id="gems" aria-label="宝箱内的宝石">◆　◆　◆　◆</span><p id="progress">已查阅 0 / 4</p><button hidden id="total" onclick="sum()">查看合计</button>'))}
+function readEntry(i){const y=choices[2],b=document.querySelectorAll('.people button')[i];opened.add(i);b.className='read';b.innerHTML='<i>✓</i>'+names[i];$('#entry').textContent=names[i]+'开采了 1 颗价值 100 金币的宝石。工资 '+(100-y)+' 金币，另有 '+y+' 金币价值被占有。';$('#gems').innerHTML='<span class="return">◆</span>　'+'◆　'.repeat(4-opened.size);b.disabled=true;$('#progress').textContent='已查阅 '+opened.size+' / 4';$('#total').hidden=opened.size<4}
+function sum(){const y=choices[2];view('island','dark','第三天　/　封账',card('当日合计','你今天无偿占有了 '+(4*y)+' 金币。','<p>宝箱里的每一颗宝石，都凝结着岛民的劳动。这 '+(4*y)+' 金币来自阿强、阿香、阿福、阿花四个人。</p><p>他们每天在矿洞工作 12 小时，每人只拿到 '+(100-y)+' 金币。你一直站在洞外，却拿走了宝石价值的 '+y+'%。</p><p>在这本账里，劳动者创造却被无偿占有的部分，就是剩余价值。</p><button id="next" hidden onclick="envelope()">继续</button>'));timer=setTimeout(()=>$('#next').hidden=false,3400)}
+function envelope(){view('rain','dark','岛民来信',card('雨夜　·　未拆封','桌上多了一封信','<button class="seal" onclick="letter()">致经理先生</button><p>向下滑动信封，或点击拆信。</p>'));let start;$('.seal').onpointerdown=e=>{start=e.clientY;e.target.setPointerCapture(e.pointerId)};$('.seal').onpointerup=e=>{if(e.clientY-start>25){e.preventDefault();letter()}}}
+function letter(){const y=choices[2];view('rain','dark','阿强的来信',card('宝石岛　·　雨夜','经理先生，你好。','<p>今天我的女儿小月发烧了。'+(y===20?'这 80 金币，够给她买药，但撑不到月底。':'我拿到的 '+(100-y)+' 金币，只够买半包药。')+'</p><p>我听说，你靠我们挖出来的宝石，换来了'+reward(2)+'和'+reward(1)+'。可我连给小月买个布娃娃都做不到。</p><p>我知道我挖出的那颗宝石值 100 金币，但那被拿走的 '+y+' 金币，我永远追不回来。</p><p>阿强</p>'+btn('放下信纸','room()')))}
+function room(){view('rain','dark','阿强家　/　雨夜',card('木板屋里','小月蜷在床边。','<p>雨水顺着屋顶滴下。桌边放着一块黯淡的石头。点一下阿强的工资，看看它能换到什么。</p><div id="pay">'+btn((100-choices[2])+' 金币','medicine()','coin')+'</div><div id="result" aria-live="polite"></div><button hidden id="next" onclick="campus()">继续</button>'))}
+function medicine(){const y=choices[2];$('#pay').innerHTML='<p class="medicine">'+(y===20?'一小包药　·　剩下的要留着买米':'半包药')+'</p>';$('#result').innerHTML='<p>你刚才拿走的 '+y+' 金币，本来可以是小月的药。你住宅里的每颗宝石都值 100 金币，而阿强只拿到了 '+(100-y)+'。</p>';timer=setTimeout(()=>$('#next').hidden=false,2100)}
+function campus(){const y=choices[2];view('campus','campus','离岛　/　回到校园',card('回到校园','如果宝石是一份小组作业……','<table><tr><td>洞里挥镐的岛民</td><td>熬夜写报告、改 PPT 的组员</td></tr><tr><td>十二小时的劳作</td><td>连续几个通宵的赶工</td></tr><tr><td>一颗完整的宝石</td><td>一份终于可以交的作业</td></tr><tr><td>被拿走的价值</td><td>被全组平分的成果与认可</td></tr><tr><td>经理的奖品</td><td>均分的高分与省下的时间</td></tr></table><p>假设一位同学创造了 100 分的成果，却只得到 '+(100-y)+' 分的认可。其余 '+y+'% 被全组平摊，你也分到了一份。</p>'+btn('翻到最后一页','reflect()')))}
+function reflect(){view('campus','campus','离岛　/　回望',card('最后一页','你在过去的小组里，更接近谁？','<p>是矿洞里劳作的岛民，还是分走宝石的人？也许在不同的作业里，你站过不同的位置。</p><p>这个故事借用了剩余价值的分配关系。当劳动者创造的成果反过来成为压迫自己的力量，也可以从劳动异化的角度理解这种处境。这里借用的是一种关系，校园合作有它自己的情境。</p>'+btn('填写离岛问卷','quiz(1)')))}
+function finish(){view('campus','paper','档案完结',card('离岛记录　·　完成','感谢参与本次体验。','<p>本次答卷已填写完毕。你可以下载本轮记录，交给课程小组汇总。</p><div class="actions">'+btn('下载本轮记录','download()')+btn('重新体验','reset()')+'</div>'))}
+function download(){const data={前测:answers[0][response[0]],三天经营:choices.map((y,d)=>({天:d+1,剥削数值:y,单人工资:100-y,奖励:reward(d)})),后测:questions.slice(1).map((q,i)=>({题目:q,回答:answers[i+1][response[i+1]]}))};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='宝石岛-本轮记录.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+reset();
+
+</script></body></html>
