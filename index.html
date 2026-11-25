@@ -227,7 +227,8 @@ const names=['阿强','阿香','阿福','阿花'],tiers=[20,50,80], prizes=[['�
 const questions=['在大学小组作业中，你的本能倾向更接近？','经历这次模拟，未来面对小组作业，你会？','你如何看待小组作业中“搭便车”的现象？','你更支持哪一种小组作业评分方式？'];
 const answers=[['主动承担责任，追求作业高质量','最小化个人付出，拿到同等成果就好','随大流，别人干我就跟着干'],['主动承担任务，尊重他人劳动，推动公平分工','维持原有习惯，尽量减少个人付出','重新思考协作公平，观念已经发生改变','还没想好，但会认真考虑'],['属于对他人劳动的不公平占有','存在不公平，但属于小组合作中常见的情况','不认为存在问题，小组本来就该一起拿分'],['以小组为单位整体赋分','依据各人实际承担的工作量差异化赋分','由小组全体成员共同商议，决定本组的赋分规则']];
 let day,choices,response,opened,kind='island',level=0,enabled=false,ctx,noise,beat,timer;
-function reset(){day=0;choices=[20,null,null];response=[];opened=new Set();home()}
+let submissionId;
+function reset(){submissionId=null;day=0;choices=[20,null,null];response=[];opened=new Set();home()}
 function draw(){if(!document.body.dataset.backdrop)drawScene(canvas,kind,level)}
 window.addEventListener('resize',draw);
 function audio(){if(beat)clearInterval(beat);if(noise){noise.stop();noise=null}if(!enabled)return;ctx??=new AudioContext();ctx.resume().catch(()=>{});if(kind==='rain'){const b=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()-.5)*.045;noise=ctx.createBufferSource();noise.buffer=b;noise.loop=true;noise.connect(ctx.destination);noise.start()}else if(!document.body.className&&['office','car','house','island'].includes(kind)){let n=0;beat=setInterval(()=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=[196,246.94,293.66,185,220,277][n++%6];g.gain.setValueAtTime(.024,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.65);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+.7)},760)}}
@@ -253,7 +254,33 @@ function room(){view('rain','dark','阿强家　/　雨夜',card('木板屋里',
 function medicine(){document.body.dataset.backdrop="cabin-result";const y=choices[2];$('#pay').innerHTML='<p class="medicine">'+(y===20?'一小包药　·　剩下的要留着买米':'半包药')+'</p>';$('#result').innerHTML='<p>你刚才拿走的 '+y+' 金币，本来可以是小月的药。你住宅里的每颗宝石都值 100 金币，而阿强只拿到了 '+(100-y)+'。</p>';timer=setTimeout(()=>$('#next').hidden=false,2100)}
 function campus(){const y=choices[2];view('campus','campus','离岛　/　回到校园',card('回到校园','如果宝石是一份小组作业……','<table><tr><td>洞里挥镐的岛民</td><td>熬夜写报告、改 PPT 的组员</td></tr><tr><td>十二小时的劳作</td><td>连续几个通宵的赶工</td></tr><tr><td>一颗完整的宝石</td><td>一份终于可以交的作业</td></tr><tr><td>被拿走的价值</td><td>被全组平分的成果与认可</td></tr><tr><td>经理的奖品</td><td>均分的高分与省下的时间</td></tr></table><p>假设一位同学创造了 100 分的成果，却只得到 '+(100-y)+' 分的认可。其余 '+y+'% 被全组平摊，你也分到了一份。</p>'+btn('翻到最后一页','reflect()')))}
 function reflect(){view('campus','campus','离岛　/　回望',card('最后一页','你在过去的小组里，更接近谁？','<p>是矿洞里劳作的岛民，还是分走宝石的人？也许在不同的作业里，你站过不同的位置。</p><p>这个故事借用了剩余价值的分配关系。当劳动者创造的成果反过来成为压迫自己的力量，也可以从劳动异化的角度理解这种处境。这里借用的是一种关系，校园合作有它自己的情境。</p>'+btn('填写离岛问卷','quiz(1)')))}
-function finish(){view('campus','paper','档案完结',card('离岛记录　·　完成','感谢参与本次体验。','<p>本次答卷已填写完毕。你可以下载本轮记录，交给课程小组汇总。</p><div class="actions">'+btn('下载本轮记录','download()')+btn('重新体验','reset()')+'</div>'))}
+const collection = {"url":"https://agmckhgriboqkcaedzxr.supabase.co","key":"sb_publishable_D7bm4IsqoaQsBKvUziDxig_KNhS3sDK"};
+function finish(){
+  view('campus','paper','档案完结',card('离岛记录　·　完成','感谢参与本次体验。',
+    '<p>你可以匿名提交前后测答案和三天的经营记录，供课程小组统计。无需填写姓名，也可以只下载自己的记录。</p><div class="actions"><button id="submit-round" onclick="submitRound(this)">匿名提交本轮记录</button>'+btn('下载本轮记录','download()')+btn('重新体验','reset()')+'</div><p role="status" id="submission-status"></p>'));
+}
+async function submitRound(button){
+  if(button.disabled)return;
+  const status=$('#submission-status');
+  button.disabled=true;
+  status.textContent='正在提交…';
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),15000);
+  try {
+    submissionId??=crypto.randomUUID();
+    const result=await fetch(collection.url+'/rest/v1/rpc/submit_island_round',{
+      method:'POST',headers:{apikey:collection.key,'Content-Type':'application/json'},
+      body:JSON.stringify({round_id:submissionId,quiz_answers:response,car_tier:choices[1],house_tier:choices[2]}),
+      signal:controller.signal
+    });
+    if(!result.ok || await result.json()!==true)throw Error();
+    status.textContent='已提交，课程小组已收到本轮记录。';
+    button.textContent='已提交';
+  }catch{
+    status.textContent='暂未确认收到，请重试，或下载本轮记录交给课程小组。';
+    button.disabled=false;
+  }finally{clearTimeout(timeout)}
+}
 function download(){const data={前测:answers[0][response[0]],三天经营:choices.map((y,d)=>({天:d+1,剥削数值:y,单人工资:100-y,奖励:reward(d)})),后测:questions.slice(1).map((q,i)=>({题目:q,回答:answers[i+1][response[i+1]]}))};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='宝石岛-本轮记录.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 reset();
 
